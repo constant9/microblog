@@ -1,8 +1,12 @@
 package boot.api.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CreatePostDto {
     private String subject;
     private String text;
+
+	@JsonProperty("user_name")
     private String userName;
 
     public String getSubject() {

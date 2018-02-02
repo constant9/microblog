@@ -1,14 +1,22 @@
 package boot.api.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
 public class PostDto {
     private String subject;
     private String text;
+	@JsonProperty("user_name")
     private String userName;
     private int id;
     private int score;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+	@JsonProperty("creation_date")
     private Date creationDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+	@JsonProperty("update_date")
     private Date updateDate;
 
     public String getSubject() {

@@ -1,6 +1,8 @@
 package boot.dal.model;
 
 
+import org.springframework.data.domain.Persistable;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -12,7 +14,9 @@ public class Vote  implements Serializable {
 
     @EmbeddedId
     private VoteId voteId;
+    @Column(name="score")
     private int score;
+    @Column(name="creation_date")
     private Date creationDate = new Date();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -109,11 +113,14 @@ public class Vote  implements Serializable {
 
         return Objects.hash(voteId, score, creationDate, user, post);
     }
-    //endregion
+
+	//endregion
 
     @Embeddable
     public static class VoteId implements Serializable {
+        @Column(name="post_id")
         private int postId;
+        @Column(name="user_id")
         private int userId;
 
         //fails without default constr.

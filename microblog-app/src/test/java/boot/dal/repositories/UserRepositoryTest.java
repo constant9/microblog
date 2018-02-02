@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import static org.junit.Assert.*;
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.HSQL)
 @SpringBootTest(classes = MicroblogBoot.class)
+@TestPropertySource(locations="classpath:test.app.properties")
 public class UserRepositoryTest {
     @Autowired
     PostRepository postRepository;

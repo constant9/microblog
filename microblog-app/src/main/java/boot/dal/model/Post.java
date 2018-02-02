@@ -10,9 +10,8 @@ import java.util.List;
 @Table(name = "posts")
 public class Post {
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
-
     private String subject;
     private String text;
 
