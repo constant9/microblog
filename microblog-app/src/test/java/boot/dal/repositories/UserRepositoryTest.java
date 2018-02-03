@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,12 +31,14 @@ public class UserRepositoryTest {
     UserRepository userRepository;
 
     @Test
+    @Transactional
     public void testCreate(){
         User saved = userRepository.save(new User().setName("k"));
         assertNotNull(saved);
     }
 
     @Test
+    @Transactional
     public void testFindByName(){
         List<User> users = new ArrayList<>();
         for (int i = 0; i < 100; i++) {

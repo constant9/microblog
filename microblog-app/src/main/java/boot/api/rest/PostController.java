@@ -63,16 +63,16 @@ public class PostController {
         Post post = postRepository.findOne(postId);
         if(post == null)
             throw new NotFoundErrorResponse("post #" + postId + " does not exist.");
-        Integer score = Optional.ofNullable(votesRepository.sumScore(postId)).orElse(0);
+        //Integer score = Optional.ofNullable(votesRepository.sumScore(postId)).orElse(0);
         return toDto(post)
-                .setUserName(post.getCreator().getName())
-                .setScore(score.intValue());
+                .setUserName(post.getCreator().getName());
     }
 
     private static PostDto toDto(Post post){
         return new PostDto().setCreationDate(post.getCreationDate())
                 .setId(post.getId()).setSubject(post.getSubject())
                 .setText(post.getText()).setCreationDate(post.getCreationDate())
-                .setUpdateDate(post.getUpdateDate());
+                .setUpdateDate(post.getUpdateDate())
+				.setPositiveScore(post.getVotePositiveScore());
     }
 }

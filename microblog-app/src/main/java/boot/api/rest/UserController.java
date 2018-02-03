@@ -4,6 +4,7 @@ import boot.api.rest.dto.AlreadyExitsErrorResponse;
 import boot.api.rest.dto.NotFoundErrorResponse;
 import boot.api.rest.dto.UserDto;
 import boot.dal.model.User;
+import boot.dal.repositories.PostRepository;
 import boot.dal.repositories.UserRepository;
 import boot.dal.repositories.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class UserController {
     private UserRepository userRepository;
 	@Autowired
 	private VoteRepository voteRepository;
+	@Autowired
+	private PostRepository postRepository;
 	@Autowired
 	private EntityManagerFactory emFactory;
 
@@ -75,11 +78,16 @@ public class UserController {
 					.setParameter("scr", voteScore)
 					.executeUpdate();
 			//voteRepository.save(vote);
+			if(voteScore > 0) //only upvotes are stored on the  post
+				entityManager.createNativeQuery("update posts set vote_score = vote_score + :scr where id = :pid;")
+						.setParameter("pid", postId)
+						.setParameter("scr", voteScore)
+						.executeUpdate();
 			transaction.commit();
 			return new ResponseEntity<>(new ExceptionHadler.Details("Vote saved"), HttpStatus.ACCEPTED);
 		}catch (/*DataIntegrityViolationException | org.hibernate.exception.ConstraintViolationException*/Exception e)
 		{
-			throw new AlreadyExitsErrorResponse("User`s " + userName+ " vote wasn`t saved for post " + postId);
+			throw new AlreadyExitsErrorResponse("User`s " + userName + " vote wasn`t saved for post " + postId);
 		}finally {
     		entityManager.close();
 		}

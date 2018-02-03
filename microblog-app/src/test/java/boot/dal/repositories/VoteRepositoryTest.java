@@ -14,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
+
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -31,6 +33,7 @@ public class VoteRepositoryTest {
     UserRepository userRepository;
 
     @Test
+    @Transactional
     public void testCreate(){
         User userCreator = Utils.createUser(userRepository);
         Post post = Utils.createPost(userCreator, postRepository);
@@ -39,33 +42,42 @@ public class VoteRepositoryTest {
         Vote vote = new Vote(1, userVoter, post);
         Vote save = voteRepository.save(vote);
         assertNotNull(save);
-        assertNotNull(save.getUser());
+        User saveUser = save.getUser();
+        assertNotNull(saveUser);
         assertNotNull(save.getPost());
-        assertEquals(userVoter, save.getUser());
+        assertEquals(userVoter, saveUser);
         assertEquals(post, save.getPost());
     }
 
     @Test
     public void testScoresCount(){
-        User userCreator = Utils.createUser(userRepository);
-        Post post = Utils.createPost(userCreator, postRepository);
-        int upVotes = 11;
-        int downVotes = 3;
+        for (int ii = 0; ii < 300; ii++) {
 
-        User userVoter = null;
-        Vote save = null;
-        for (int i=0; i< upVotes;i++) {
-            userVoter = Utils.createUser(userRepository);
-            Vote vote = new Vote(1, userVoter, post);
-            save = voteRepository.save(vote);
-        }
-        for (int i=0; i< downVotes;i++) {
-            userVoter = Utils.createUser(userRepository);
-            Vote vote = new Vote(-1, userVoter, post);
-            save = voteRepository.save(vote);
-        }
-        int sumScore = voteRepository.sumScore(post.getId());
-        assertEquals(upVotes - downVotes, sumScore);
 
+            User userCreator = Utils.createUser(userRepository);
+            Post post = Utils.createPost(userCreator, postRepository);
+            int upVotes = 11;
+            int downVotes = 3;
+
+            User userVoter = null;
+            Vote save = null;
+            for (int i = 0; i < upVotes; i++) {
+                userVoter = Utils.createUser(userRepository);
+                Vote vote = new Vote(1, userVoter, post);
+                save = voteRepository.save(vote);
+            }
+            for (int i = 0; i < downVotes; i++) {
+                userVoter = Utils.createUser(userRepository);
+                Vote vote = new Vote(-1, userVoter, post);
+                save = voteRepository.save(vote);
+            }
+
+            Integer sumScore = voteRepository.sumScore(post.getId());
+            assertEquals(upVotes - downVotes, sumScore.intValue());
+            Integer sumScorePositive = voteRepository.sumPositiveScore(post.getId());
+            assertEquals(upVotes, sumScorePositive.intValue());
+            Integer sumNegativeScore = voteRepository.sumNegativeScore(post.getId());
+            assertEquals(downVotes, sumNegativeScore.intValue());
+        }
     }
 }

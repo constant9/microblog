@@ -11,7 +11,8 @@ public class PostDto {
 	@JsonProperty("user_name")
     private String userName;
     private int id;
-    private int score;
+    @JsonProperty("upvotes")
+    private int positiveScore;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	@JsonProperty("creation_date")
     private Date creationDate;
@@ -55,12 +56,12 @@ public class PostDto {
         return this;
     }
 
-    public int getScore() {
-        return score;
+    public int getPositiveScore() {
+        return positiveScore;
     }
 
-    public PostDto setScore(int score) {
-        this.score = score;
+    public PostDto setPositiveScore(int score) {
+        this.positiveScore = score;
         return this;
     }
 
