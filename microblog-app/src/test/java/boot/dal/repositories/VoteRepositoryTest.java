@@ -51,33 +51,30 @@ public class VoteRepositoryTest {
 
     @Test
     public void testScoresCount(){
-        for (int ii = 0; ii < 300; ii++) {
+        User userCreator = Utils.createUser(userRepository);
+        Post post = Utils.createPost(userCreator, postRepository);
+        int upVotes = 11;
+        int downVotes = 3;
 
-
-            User userCreator = Utils.createUser(userRepository);
-            Post post = Utils.createPost(userCreator, postRepository);
-            int upVotes = 11;
-            int downVotes = 3;
-
-            User userVoter = null;
-            Vote save = null;
-            for (int i = 0; i < upVotes; i++) {
-                userVoter = Utils.createUser(userRepository);
-                Vote vote = new Vote(1, userVoter, post);
-                save = voteRepository.save(vote);
-            }
-            for (int i = 0; i < downVotes; i++) {
-                userVoter = Utils.createUser(userRepository);
-                Vote vote = new Vote(-1, userVoter, post);
-                save = voteRepository.save(vote);
-            }
-
-            Integer sumScore = voteRepository.sumScore(post.getId());
-            assertEquals(upVotes - downVotes, sumScore.intValue());
-            Integer sumScorePositive = voteRepository.sumPositiveScore(post.getId());
-            assertEquals(upVotes, sumScorePositive.intValue());
-            Integer sumNegativeScore = voteRepository.sumNegativeScore(post.getId());
-            assertEquals(downVotes, sumNegativeScore.intValue());
+        User userVoter = null;
+        Vote save = null;
+        for (int i = 0; i < upVotes; i++) {
+            userVoter = Utils.createUser(userRepository);
+            Vote vote = new Vote(1, userVoter, post);
+            save = voteRepository.save(vote);
         }
+        for (int i = 0; i < downVotes; i++) {
+            userVoter = Utils.createUser(userRepository);
+            Vote vote = new Vote(-1, userVoter, post);
+            save = voteRepository.save(vote);
+        }
+
+        Integer sumScore = voteRepository.sumScore(post.getId());
+        assertEquals(upVotes - downVotes, sumScore.intValue());
+        Integer sumScorePositive = voteRepository.sumPositiveScore(post.getId());
+        assertEquals(upVotes, sumScorePositive.intValue());
+        Integer sumNegativeScore = voteRepository.sumNegativeScore(post.getId());
+        assertEquals(downVotes, sumNegativeScore.intValue());
     }
+
 }

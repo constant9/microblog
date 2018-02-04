@@ -126,7 +126,7 @@ public class Post {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, votePositiveScore, subject, text, creationDate, updateDate, creator, votes);
+        return Objects.hash(id, votePositiveScore, subject, text, creationDate, updateDate, creator);
     }
 
     @Override
@@ -139,7 +139,6 @@ public class Post {
                 ", creationDate=" + creationDate +
                 ", updateDate=" + updateDate +
                 ", creator=" + creator +
-                ", votes=" + votes +
                 '}';
     }
 }

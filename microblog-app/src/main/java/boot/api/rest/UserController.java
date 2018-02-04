@@ -8,6 +8,7 @@ import boot.dal.repositories.PostRepository;
 import boot.dal.repositories.UserRepository;
 import boot.dal.repositories.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 
 
@@ -28,10 +30,9 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+
 	@Autowired
-	private VoteRepository voteRepository;
-	@Autowired
-	private PostRepository postRepository;
+	private ApplicationEventPublisher applicationEventPublisher;
 	@Autowired
 	private EntityManagerFactory emFactory;
 
@@ -66,24 +67,22 @@ public class UserController {
 	private ResponseEntity<ExceptionHadler.Details> vote(String userName, int postId, int voteScore){
 		EntityManager entityManager = emFactory.createEntityManager();
     	try{
-			//Post post = emFactory.createEntityManager().getReference(Post.class, postId);
-			//User byName = validateFindResults(userName , userRepository.findByName(userName));
-			//Vote vote = new Vote(voteScore, byName, post);
-
 			EntityTransaction transaction = entityManager.getTransaction();
 			transaction.begin();
-			int i = entityManager.createNativeQuery("insert into votes (post_id, user_id, score) values (:pid, (select id from users where name=:uname) ,:scr);")
+			int i = entityManager.createNativeQuery("insert into votes (post_id, user_id, score, creation_date) values (:pid, (select id from users where name=:uname) ,:scr, :date);")
 					.setParameter("pid", postId)
 					.setParameter("uname", userName)
 					.setParameter("scr", voteScore)
+					.setParameter("date", new Date())
 					.executeUpdate();
-			//voteRepository.save(vote);
+
 			if(voteScore > 0) //only upvotes are stored on the  post
-				entityManager.createNativeQuery("update posts set vote_score = vote_score + :scr where id = :pid;")
-						.setParameter("pid", postId)
+				entityManager.createNativeQuery("update posts set vote_positive_score = vote_positive_score + :scr where id = :pid ;")
 						.setParameter("scr", voteScore)
+						.setParameter("pid", postId)
 						.executeUpdate();
 			transaction.commit();
+			applicationEventPublisher.publishEvent(new VoteEvent(this, postId, voteScore));
 			return new ResponseEntity<>(new ExceptionHadler.Details("Vote saved"), HttpStatus.ACCEPTED);
 		}catch (/*DataIntegrityViolationException | org.hibernate.exception.ConstraintViolationException*/Exception e)
 		{

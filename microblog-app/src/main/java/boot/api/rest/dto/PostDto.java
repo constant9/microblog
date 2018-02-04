@@ -1,6 +1,7 @@
 package boot.api.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
@@ -8,7 +9,8 @@ import java.util.Date;
 public class PostDto {
     private String subject;
     private String text;
-	@JsonProperty("user_name")
+	@JsonProperty(value = "user_name")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String userName;
     private int id;
     @JsonProperty("upvotes")

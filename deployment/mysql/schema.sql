@@ -1,7 +1,7 @@
 DROP DATABASE IF EXISTS microblog;
 CREATE DATABASE IF NOT EXISTS microblog;
 USE microblog;
-
+SET GLOBAL time_zone = '+2:00';
 DROP TABLE IF EXISTS users,posts,votes;
 
 CREATE TABLE `users`(
@@ -22,6 +22,7 @@ CREATE TABLE `posts` (
   PRIMARY KEY (`id`),
   CONSTRAINT `FK_users` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE INDEX IX_vote_positive_score ON posts (vote_positive_score);
 
 CREATE TABLE `votes` (
   `creation_date` datetime NOT NULL,
