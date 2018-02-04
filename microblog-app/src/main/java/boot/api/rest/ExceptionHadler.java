@@ -26,7 +26,7 @@ public class ExceptionHadler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(AlreadyExitsErrorResponse.class)
 	public final ResponseEntity<Details> handleException(AlreadyExitsErrorResponse ex, WebRequest request) {
 		Details errorDetails = new Details(ex.getTimestamp(), ex.getMessage());
-		return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(errorDetails, HttpStatus.CONFLICT);
 	}
 
 
@@ -34,6 +34,9 @@ public class ExceptionHadler extends ResponseEntityExceptionHandler {
 		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
         private Date timestamp = new Date();
         private String message;
+
+		public Details() {
+		}
 
 		public Details(String message) {
 			this.message = message;

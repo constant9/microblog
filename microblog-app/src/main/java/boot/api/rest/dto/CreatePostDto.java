@@ -3,6 +3,16 @@ package boot.api.rest.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CreatePostDto {
+
+    public CreatePostDto() {
+    }
+
+    public CreatePostDto(String subject, String text, String userName) {
+        this.subject = subject;
+        this.text = text;
+        this.userName = userName;
+    }
+
     private String subject;
     private String text;
 

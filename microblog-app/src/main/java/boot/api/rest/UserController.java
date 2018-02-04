@@ -37,7 +37,7 @@ public class UserController {
 	private EntityManagerFactory emFactory;
 
     @RequestMapping(method = RequestMethod.POST, value="/{userName}")
-    public UserDto update(@PathVariable String userName){
+    public UserDto create(@PathVariable String userName){
         try{
 			User user = userRepository.save(new User().setName(userName));
 			return toDto(user);

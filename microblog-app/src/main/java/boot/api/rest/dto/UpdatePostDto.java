@@ -4,6 +4,14 @@ public class UpdatePostDto {
     private String subject;
     private String text;
 
+    public UpdatePostDto(String subject, String text) {
+        this.subject = subject;
+        this.text = text;
+    }
+
+    public UpdatePostDto() {
+    }
+
     public String getSubject() {
         return subject;
     }
