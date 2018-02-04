@@ -30,7 +30,7 @@ import static org.junit.Assert.*;
 //@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.HSQL)
 @SpringBootTest(classes = MicroblogBoot.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations="classpath:test.app.properties")
-public class PostControllerTest {
+public class IntegrationRestControllerTest {
 
 	@LocalServerPort
 	private int port;

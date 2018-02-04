@@ -12,7 +12,7 @@
     </modules>
     <packaging>pom</packaging>
 
-    <dependencies>
+<!--    <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -30,7 +30,7 @@
             <scope>test</scope>
         </dependency>
 
-    </dependencies>
+    </dependencies>-->
 
     <build>
         <plugins>
