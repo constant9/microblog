@@ -7,8 +7,9 @@ DROP TABLE IF EXISTS users,posts,votes;
 CREATE TABLE `users`(
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `creation_date` datetime NOT NULL,
-  `name` varchar(20) NOT NULL UNIQUE,
-  PRIMARY KEY (`id`)
+  `name` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `posts` (
