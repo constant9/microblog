@@ -45,7 +45,7 @@ public class PostService implements ApplicationListener<VoteEvent> {
 
 	@PostConstruct
 	private void init(){
-		scheduledThreadPoolExecutor.scheduleWithFixedDelay(()->refreshTopList(), 0L, topPostsListRefresh, TimeUnit.MILLISECONDS);
+		//scheduledThreadPoolExecutor.scheduleWithFixedDelay(()->refreshTopList(), 0L, topPostsListRefresh, TimeUnit.MILLISECONDS);
 	}
 
 	public List<PostDto> getTopList(){

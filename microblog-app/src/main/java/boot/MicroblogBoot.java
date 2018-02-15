@@ -1,7 +1,10 @@
 package boot;
 
+import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,11 +16,12 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
+@SpringBootApplication(scanBasePackages = "microblog.mongo")
 //@PropertySource("classpath:application.properties")
 public class MicroblogBoot {
 
     public static void main(String[] args) {
-        SpringApplication.run(MicroblogBoot.class);
+    	SpringApplication.run(MicroblogBoot.class);
     }
 
     @Bean(name = "applicationEventMulticaster")

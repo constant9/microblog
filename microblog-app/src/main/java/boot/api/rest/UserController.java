@@ -4,9 +4,9 @@ import boot.api.rest.dto.AlreadyExitsErrorResponse;
 import boot.api.rest.dto.NotFoundErrorResponse;
 import boot.api.rest.dto.UserDto;
 import boot.dal.model.User;
-import boot.dal.repositories.PostRepository;
-import boot.dal.repositories.UserRepository;
-import boot.dal.repositories.VoteRepository;
+//import boot.dal.repositories.UserRepository;
+
+import microblog.mongo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -38,13 +38,14 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST, value="/{userName}")
     public UserDto create(@PathVariable String userName){
-        try{
+      /*  try{
 			User user = userRepository.save(new User().setName(userName));
 			return toDto(user);
 		}catch (DataIntegrityViolationException e)
 		{
 			throw new AlreadyExitsErrorResponse("User " + userName + "already exists");
-		}
+		}*/
+      return null;
     }
 
 	@RequestMapping(method = RequestMethod.POST, value="/{userName}/upvote/{postId}")
@@ -58,9 +59,11 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET, value="/{userName}")
     public UserDto get(@PathVariable String userName){
-        List<User> users = userRepository.findByName(userName);
+       /* List<User> users = userRepository.findByName(userName);
 		User user = validateFindResults(userName, users);
-		return toDto(user);
+		return toDto(user);*/
+       return null;
+
     }
 
     //this method is ugly because it uses a native sql in order to try to insert vote and let the DB fail in case of violation
