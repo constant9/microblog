@@ -1,7 +1,9 @@
 package microblog.mongo.dal.model;
 
 
+//import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.CreationTimestamp;
+
 import java.io.Serializable;
 import java.util.Date;
 

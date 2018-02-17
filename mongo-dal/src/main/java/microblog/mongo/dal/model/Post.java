@@ -2,19 +2,22 @@ package microblog.mongo.dal.model;
 
 
 import com.google.common.base.MoreObjects;
+//import org.hibernate.annotations.CreationTimestamp;
+//import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Id;
+//import javax.persistence.Id;
 import java.util.Date;
 
 
 @Document(collection = "posts")
 public class Post {
     @Id
-    private int id;
+    private String id;
     private int votePositiveScore;
     private int voteNegativeScore;
     private String subject;
@@ -29,11 +32,11 @@ public class Post {
 
     //region ... setters/getters
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public Post setId(int id) {
+	public Post setId(String id) {
 		this.id = id;
 		return this;
 	}
