@@ -2,13 +2,12 @@ package microblog.mongo.dal.model;
 
 
 import com.google.common.base.MoreObjects;
-//import org.hibernate.annotations.CreationTimestamp;
-//import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 //import javax.persistence.Id;
 import java.util.Date;
@@ -18,13 +17,16 @@ import java.util.Date;
 public class Post {
     @Id
     private String id;
-    private int votePositiveScore;
-    private int voteNegativeScore;
+
+    private int votePositiveScore = 0;
+    private int voteNegativeScore = 0;
     private String subject;
     private String text;
-	@CreationTimestamp
+
+	@Field("creation_date")
     private Date creationDate = new Date();
-	@UpdateTimestamp
+
+	@Field("update_date")
     private Date updateDate = new Date();
 
     @DBRef

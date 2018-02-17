@@ -35,22 +35,24 @@ public class PostRepositoryTest {
 				.setCreator(user)
 				.setSubject("subject_" + postfix)
 				.setText("text_" + postfix)
-				.setUpdateDate(creationDate)
-				.setVoteNegativeScore(0)
-				.setVotePositiveScore(0);
+				.setUpdateDate(creationDate);
 
 		Post save = postRepository.save(post);
 		Post one = postRepository.findOne(Example.of(new Post()
 														.setId(save.getId()).setVoteNegativeScore(0).setVotePositiveScore(0).setCreationDate(null).setUpdateDate(null)));
 		assertNotNull(one);
+
+		user.getPosts().add(post);
+		userRepository.save(user);
 		User one1 = userRepository.findByName(user.getName());
-		one1.getPosts().add(post);
-		userRepository.save(one1);
-		one1 = userRepository.findByName(user.getName());
 		assertNotNull(one1);
 		List<Post> posts = one1.getPosts();
 		assertTrue(!posts.isEmpty());
 		assertEquals(posts.get(0).getId(), one.getId());
+
+		List<Post> byCreator = postRepository.findByCreator(user.getId());
+		assertTrue(!byCreator.isEmpty());
+
 
 	}
 

@@ -1,15 +1,21 @@
 package microblog.mongo.repository;
 
+import microblog.mongo.MongoBoot;
 import microblog.mongo.dal.model.User;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Example;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
 import java.util.Random;
 
 import static org.junit.Assert.assertNotNull;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = MongoBoot.class)
 public class UserRepositoryTest {
 	static final Random random = new Random();
 	@Autowired
@@ -32,6 +38,16 @@ public class UserRepositoryTest {
 		User save = userRepository.save(user);
 
 		User one = userRepository.findByName(user.getName());
+		assertNotNull(one);
+	}
+
+	@Test
+	public void findById() {
+		User user = new User();
+		user.setName("user_name_" + random.nextInt());
+		User save = userRepository.save(user);
+
+		User one = userRepository.findById(save.getId());
 		assertNotNull(one);
 	}
 
