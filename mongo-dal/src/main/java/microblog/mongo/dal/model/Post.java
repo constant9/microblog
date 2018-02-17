@@ -8,17 +8,16 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-
-//import javax.persistence.Id;
 import java.util.Date;
-
 
 @Document(collection = "posts")
 public class Post {
     @Id
     private String id;
 
+	@Field("vote_positive_score")
     private int votePositiveScore = 0;
+	@Field("vote_negative_score")
     private int voteNegativeScore = 0;
     private String subject;
     private String text;
