@@ -55,30 +55,21 @@
 
     </dependencies>
 
-  <!--  <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>boot.MicroblogBoot</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-
-            </plugin>
-        </plugins>
-    </build>-->
     <properties>
         <java.version>1.8</java.version>
-        <maven.test.skip>true</maven.test.skip>
+       <!-- <maven.test.skip>true</maven.test.skip>-->
     </properties>
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>**/IntegrationRestControllerTest.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
